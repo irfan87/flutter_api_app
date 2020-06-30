@@ -7,7 +7,7 @@ class JSONNetwork {
 
   JSONNetwork(this.url);
 
-  Future<String> fetchData() async {
+  Future fetchData() async {
     print("The API was called from $url");
 
     Response response = await get(Uri.encodeFull(url));
@@ -16,7 +16,7 @@ class JSONNetwork {
       // we are good to go
       // print(response.body);
 
-      return json.encode(response.body);
+      return json.decode(response.body);
     } else {
       print(response.statusCode);
     }
