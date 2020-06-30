@@ -28,7 +28,7 @@ class _ParsingJSONState extends State<ParsingJSON> {
           child: FutureBuilder(
             builder: (context, AsyncSnapshot<dynamic> snapshot) {
               return snapshot.hasData
-                  ? Text(snapshot.data[0]['title'])
+                  ? createListView(snapshot.data, context)
                   : CircularProgressIndicator();
             },
             future: getData(),
@@ -48,5 +48,36 @@ class _ParsingJSONState extends State<ParsingJSON> {
 
     // print(data);
     return data;
+  }
+
+  Widget createListView(List data, BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, int index) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Divider(
+                height: 5.0,
+              ),
+              ListTile(
+                title: Text("${data.elementAt(index)['title']}"),
+                subtitle: Text("${data.elementAt(index)['body']}"),
+                leading: Column(
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Colors.black26,
+                      radius: 23.0,
+                      child: Text('${data.elementAt(index)['userId']}'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

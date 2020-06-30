@@ -8,8 +8,6 @@ class JSONNetwork {
   JSONNetwork(this.url);
 
   Future fetchData() async {
-    print("The API was called from $url");
-
     Response response = await get(Uri.encodeFull(url));
 
     if (response.statusCode == 200) {
