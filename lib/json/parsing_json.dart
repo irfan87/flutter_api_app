@@ -7,7 +7,7 @@ class ParsingJSON extends StatefulWidget {
 }
 
 class _ParsingJSONState extends State<ParsingJSON> {
-  Future<String> data;
+  Future data;
 
   @override
   void initState() {
@@ -23,10 +23,22 @@ class _ParsingJSONState extends State<ParsingJSON> {
         title: Text('Flutter API App'),
         centerTitle: true,
       ),
+      body: Center(
+        child: Container(
+          child: FutureBuilder(
+            builder: (context, AsyncSnapshot<dynamic> snapshot) {
+              return snapshot.hasData
+                  ? Text(snapshot.data[0]['title'])
+                  : CircularProgressIndicator();
+            },
+            future: getData(),
+          ),
+        ),
+      ),
     );
   }
 
-  Future<String> getData() async {
+  Future getData() async {
     var data;
 
     String url = 'https://jsonplaceholder.typicode.com/posts';
@@ -34,7 +46,7 @@ class _ParsingJSONState extends State<ParsingJSON> {
 
     data = jsonNetwork.fetchData();
 
-    print(data);
+    // print(data);
     return data;
   }
 }
