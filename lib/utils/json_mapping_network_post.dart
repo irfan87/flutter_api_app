@@ -1,7 +1,4 @@
-import 'dart:convert';
-
-import 'package:http/http.dart';
-
+// this will invoke the specific data that we want to show, such as ID, userId, title and body, as a map
 class JSONMappingNetworkPost {
   final int userId;
   final int id;
@@ -23,5 +20,24 @@ class JSONMappingNetworkPost {
       title: jsonPost['title'],
       body: jsonPost['body'],
     );
+  }
+}
+
+// this will get the entire payload of post as a list
+class JSONMappingNetworkPostList {
+  final List<JSONMappingNetworkPost> posts;
+
+  JSONMappingNetworkPostList({
+    this.posts,
+  });
+
+  factory JSONMappingNetworkPostList.fromJson(List<dynamic> parsedJSONPosts) {
+    List<JSONMappingNetworkPost> posts = List<JSONMappingNetworkPost>();
+
+    posts =
+        parsedJSONPosts.map((i) => JSONMappingNetworkPost.fromJson(i)).toList();
+
+    return JSONMappingNetworkPostList(
+        posts: posts); // example: Post.elementAt(0).userId;
   }
 }
