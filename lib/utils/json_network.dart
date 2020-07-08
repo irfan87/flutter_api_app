@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_api_app/utils/json_mapping_network_post.dart';
 import 'package:http/http.dart';
 
 class JSONNetwork {
@@ -7,18 +8,29 @@ class JSONNetwork {
 
   JSONNetwork(this.url);
 
-  Future fetchData() async {
-    Response response = await get(Uri.encodeFull(url));
+  Future<JSONMappingNetworkPostList> loadPost() async {
+    final response = await get(Uri.encodeFull(url));
 
     if (response.statusCode == 200) {
-      // we are good to go
-      // print(response.body);
-
-      return json.decode(response.body);
+      return JSONMappingNetworkPostList.fromJson(json.decode(response.body));
     } else {
-      print(response.statusCode);
+      // print(response.statusCode);
+      throw Exception("Failed to get post");
     }
-
-    return response.body;
   }
+
+  // Future fetchData() async {
+  //   Response response = await get(Uri.encodeFull(url));
+
+  //   if (response.statusCode == 200) {
+  //     // we are good to go
+  //     // print(response.body);
+
+  //     return json.decode(response.body);
+  //   } else {
+  //     print(response.statusCode);
+  //   }
+
+  //   return response.body;
+  // }
 }
